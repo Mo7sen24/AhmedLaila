@@ -1574,10 +1574,16 @@ html.fp-on .fpw{display:block}
 }
 
 #hero2{
-    height:calc(min(100vw,480px)*5/3 + 56px);
+    --up:calc(min(100vw,480px)/3);
+    height:calc(min(100vw,480px)*4/3 + 56px);
     padding:0;
     overflow:hidden;
     background:var(--white)
+}
+
+/* lift the content up and cut the empty space above it */
+#hero2 .txt{
+    top:calc(var(--up) * -1)
 }
 </style>
 </head>
@@ -1598,6 +1604,7 @@ html.fp-on .fpw{display:block}
         class="hv"
         src="intro.mp4#t=0.001"
         muted
+        loop
         playsinline
         webkit-playsinline
         preload="auto"
@@ -3690,11 +3697,25 @@ function playIntroVideo(){
 
     introVideo.muted = true;
 
+    /* the video keeps looping; auto scroll starts when the first play ends */
+
+    introVideo.loop = true;
+
+    let lastTime = 0;
+
     introVideo.addEventListener(
-        'ended',
-        () => setTimeout(finish, 600),
-        {once:true}
+        'timeupdate',
+        () => {
+
+            if(introVideo.currentTime < lastTime - 0.5)
+                finish();
+
+            lastTime = introVideo.currentTime;
+
+        }
     );
+
+    introVideo.addEventListener('ended', finish);
 
     introVideo.addEventListener('error', finish, {once:true});
 
