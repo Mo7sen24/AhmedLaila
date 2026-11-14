@@ -1585,6 +1585,15 @@ html.fp-on .fpw{display:block}
 #hero2 .txt{
     top:calc(var(--up) * -1)
 }
+
+/* page 2 text: shorter delays so it appears sooner */
+#hero2.open .txt>:nth-child(1){transition-delay:.2s}
+#hero2.open .txt>:nth-child(2){transition-delay:.6s}
+#hero2.open .txt>.heroart{transition-delay:1s}
+#hero2.open .txt>:nth-child(3){transition-delay:4.2s}
+#hero2.open .heroart .dr,
+#hero2.open .heroart .pop{animation-delay:calc(var(--d,0s) + 1.2s)}
+#hero2.open .heroart .tint{animation-delay:calc(var(--d,1s) + 1.2s)}
 </style>
 </head>
 
@@ -3661,7 +3670,7 @@ function watchHero2(){
 
         },
         {
-            rootMargin:'0px 0px -45% 0px'
+            rootMargin:'0px 0px -10% 0px'
         }
     );
 
@@ -3782,6 +3791,11 @@ function openInvitationNow(){
      * Open the curtains
      */
 
+    /* intro video starts together with the curtain */
+
+    playIntroVideo();
+
+
     const t0 = performance.now();
 
 
@@ -3803,11 +3817,6 @@ function openInvitationNow(){
                 requestAnimationFrame(
                     animateCurtain
                 );
-
-            }else{
-
-                /* curtains are open: play the intro video */
-                playIntroVideo();
 
             }
 
