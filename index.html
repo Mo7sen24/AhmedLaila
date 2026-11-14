@@ -92,7 +92,7 @@ p{
     background:var(--white)
 }
 
-#hero .txt{
+#hero2 .txt{
     position:absolute;
     inset:0 0 56px;
     opacity:0;
@@ -100,7 +100,7 @@ p{
     z-index:1
 }
 
-#hero.open .txt{
+#hero2.open .txt{
     opacity:1
 }
 
@@ -945,7 +945,7 @@ p{font-size:17px}
 .cr{
     background:linear-gradient(180deg,var(--white) 0,var(--cream) 80px,var(--cream) calc(100% - 80px),var(--white) 100%)
 }
-section:not(#hero)::before{
+section:not(#hero):not(#hero2)::before{
     content:"";
     position:absolute;
     top:26px;
@@ -957,19 +957,19 @@ section:not(#hero)::before{
 }
 
 /* --- hero: staggered text reveal --- */
-#hero .txt{opacity:1;transition:none}
-#hero .txt>*{
+#hero2 .txt{opacity:1;transition:none}
+#hero2 .txt>*{
     opacity:0;
     transform:translateY(16px);
     transition:opacity 1.4s ease,transform 1.4s ease
 }
-#hero.open .txt>*{opacity:1;transform:none}
-#hero.open .txt>:nth-child(1){transition-delay:1.2s}
-#hero.open .txt>:nth-child(2){transition-delay:1.9s}
-#hero.open .txt>:nth-child(3){transition-delay:2.7s}
+#hero2.open .txt>*{opacity:1;transform:none}
+#hero2.open .txt>:nth-child(1){transition-delay:1.2s}
+#hero2.open .txt>:nth-child(2){transition-delay:1.9s}
+#hero2.open .txt>:nth-child(3){transition-delay:2.7s}
 
 /* --- hero: drawn flourish under the names (after curtain opens) --- */
-#hero .txt>.heroart{
+#hero2 .txt>.heroart{
     position:absolute;
     top:64%;
     left:0;
@@ -978,24 +978,24 @@ section:not(#hero)::before{
     width:190px;
     height:auto
 }
-#hero.open .txt>.heroart{transition-delay:2.4s}
+#hero2.open .txt>.heroart{transition-delay:2.4s}
 /* order: names -> drawing -> paragraph */
-#hero.open .txt>:nth-child(3){transition-delay:5.8s}
-#hero.open .heroart .dr{
+#hero2.open .txt>:nth-child(3){transition-delay:5.8s}
+#hero2.open .heroart .dr{
     animation:artdraw 1.6s cubic-bezier(.45,.05,.25,1) forwards;
     animation-delay:calc(var(--d,0s) + 2.6s)
 }
-#hero.open .heroart .pop{
+#hero2.open .heroart .pop{
     animation:artpop .55s cubic-bezier(.3,1.5,.5,1) forwards;
     animation-delay:calc(var(--d,0s) + 2.6s)
 }
-#hero.open .heroart .tint{
+#hero2.open .heroart .tint{
     animation:venuetint 1.2s ease forwards;
     animation-delay:calc(var(--d,1s) + 2.6s)
 }
 @media (prefers-reduced-motion:reduce){
-    #hero.open .heroart .dr,#hero.open .heroart .pop,#hero.open .heroart .tint{animation:none}
-    #hero .heroart .tint{opacity:var(--o,.08)}
+    #hero2.open .heroart .dr,#hero2.open .heroart .pop,#hero2.open .heroart .tint{animation:none}
+    #hero2 .heroart .tint{opacity:var(--o,.08)}
 }
 
 /* --- curtain: shadow, rod and tassel --- */
@@ -1458,7 +1458,7 @@ main::after{
 }
 
 /* thin gold rule closing every section */
-section:not(#hero)::after{
+section:not(#hero):not(#hero2)::after{
     content:"";
     position:absolute;
     left:50%;
@@ -1486,11 +1486,11 @@ p.rv,.addr.rv,.cap.rv{
 p.rv.in,.addr.rv.in,.cap.rv.in{filter:none;transform:none}
 
 /* couple's names are written in after the curtains open */
-#hero .txt>:nth-child(2){
+#hero2 .txt>:nth-child(2){
     clip-path:inset(-20% 100% -20% 0);
     transition:opacity .5s ease,transform 1.4s ease,clip-path 1.6s cubic-bezier(.45,.1,.4,1)
 }
-#hero.open .txt>:nth-child(2){clip-path:inset(-20% -5% -20% -5%)}
+#hero2.open .txt>:nth-child(2){clip-path:inset(-20% -5% -20% -5%)}
 
 /* countdown: thin gold frame drawn around each box */
 .cd div::after{
@@ -1550,10 +1550,34 @@ html.fp-on .fpw{display:block}
 }
 @media (prefers-reduced-motion:reduce){
     .fpw{display:none!important}
-    .sc.rv,#hero .txt>:nth-child(2){clip-path:none}
+    .sc.rv,#hero2 .txt>:nth-child(2){clip-path:none}
     .cd div::after{clip-path:none}
     p.rv,.addr.rv,.cap.rv{filter:none}
     .map-link.rv.in::before,.card.in .go::before{animation:none}
+}
+
+/* =========================================================
+   PAGE 1: INTRO VIDEO BEHIND THE CURTAIN  |  PAGE 2: HERO TEXT
+   ========================================================= */
+
+#hero .hv{
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:calc(100% - 56px);
+    object-fit:cover;
+    display:block;
+    background:#2b0b08;
+    z-index:2;
+    pointer-events:none
+}
+
+#hero2{
+    height:calc(min(100vw,480px)*5/3 + 56px);
+    padding:0;
+    overflow:hidden;
+    background:var(--white)
 }
 </style>
 </head>
@@ -1568,83 +1592,18 @@ html.fp-on .fpw{display:block}
 
 <section id="hero">
 
-    <div class="txt">
-
-        <div
-            class="cap"
-            style="position:absolute;top:33%;width:100%;font-size:9px;color:#a98a6c;line-height:1.5"
-        >
-            You are cordially invited to<br>
-            celebrate the engagement of
-        </div>
-
-
-        <div
-            class="sc"
-            style="position:absolute;top:38.5%;width:100%;font-size:52px;line-height:1;color:#5a3a35"
-        >
-            Omar<br>
-            <span style="font-size:22px;display:block;margin:4px 0">&amp;</span>
-            Malak
-        </div>
-
-
-        <p
-            class="cap"
-            style="position:absolute;top:79%;left:28%;width:44%;line-height:1.75;font-size:9px;letter-spacing:.14em"
-        >
-            We would love for you to join us as we celebrate
-            our engagement and the beginning of a beautiful new chapter together.
-        </p>
-
-        <svg class="art heroart" viewBox="0 0 200 66" fill="none" stroke="#a02424" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-<g>
-<path class="tint" style="--d:1.2s;--o:.08" fill="#a02424" d="M88 38C70 46 46 46 14 34L26 42C50 51 72 50 88 41Z"/>
-<path class="dr" pathLength="1" style="--d:.3s" d="M88 38C70 46 46 46 14 34"/>
-<path class="dr" pathLength="1" style="--d:.5s;stroke-width:.8;opacity:.55" d="M88 41C72 50 50 51 26 42"/>
-<g transform="translate(76.5 41.8) rotate(-148) scale(1.0)"><path class="pop" style="--d:0.90s" d="M0 0C3-6 10-7 15-3C10 3 3 4 0 0Z"/></g>
-<g transform="translate(76.5 41.8) rotate(148) scale(1.0)"><path class="pop" style="--d:0.99s" d="M0 0C3-6 10-7 15-3C10 3 3 4 0 0Z"/></g>
-<g transform="translate(63.4 43.5) rotate(-148) scale(0.95)"><path class="pop" style="--d:1.08s" d="M0 0C3-6 10-7 15-3C10 3 3 4 0 0Z"/></g>
-<g transform="translate(63.4 43.5) rotate(148) scale(0.95)"><path class="pop" style="--d:1.17s" d="M0 0C3-6 10-7 15-3C10 3 3 4 0 0Z"/></g>
-<g transform="translate(48.7 42.9) rotate(-148) scale(0.85)"><path class="pop" style="--d:1.26s" d="M0 0C3-6 10-7 15-3C10 3 3 4 0 0Z"/></g>
-<g transform="translate(48.7 42.9) rotate(148) scale(0.85)"><path class="pop" style="--d:1.35s" d="M0 0C3-6 10-7 15-3C10 3 3 4 0 0Z"/></g>
-<g transform="translate(32.3 39.8) rotate(-148) scale(0.75)"><path class="pop" style="--d:1.44s" d="M0 0C3-6 10-7 15-3C10 3 3 4 0 0Z"/></g>
-<g transform="translate(32.3 39.8) rotate(148) scale(0.75)"><path class="pop" style="--d:1.53s" d="M0 0C3-6 10-7 15-3C10 3 3 4 0 0Z"/></g>
-<circle class="pop" style="--d:2.20s" cx="12.0" cy="30.8" r="2"/>
-<circle class="pop" style="--d:2.25s" cx="15.0" cy="33.0" r="2"/>
-<circle class="pop" style="--d:2.30s" cx="13.9" cy="36.6" r="2"/>
-<circle class="pop" style="--d:2.35s" cx="10.1" cy="36.6" r="2"/>
-<circle class="pop" style="--d:2.40s" cx="9.0" cy="33.0" r="2"/>
-<circle class="pop" style="--d:2.5s" cx="12" cy="34" r=".9"/>
-</g>
-<g transform="translate(200 0) scale(-1 1)">
-<path class="tint" style="--d:1.2s;--o:.08" fill="#a02424" d="M88 38C70 46 46 46 14 34L26 42C50 51 72 50 88 41Z"/>
-<path class="dr" pathLength="1" style="--d:.3s" d="M88 38C70 46 46 46 14 34"/>
-<path class="dr" pathLength="1" style="--d:.5s;stroke-width:.8;opacity:.55" d="M88 41C72 50 50 51 26 42"/>
-<g transform="translate(76.5 41.8) rotate(-148) scale(1.0)"><path class="pop" style="--d:0.90s" d="M0 0C3-6 10-7 15-3C10 3 3 4 0 0Z"/></g>
-<g transform="translate(76.5 41.8) rotate(148) scale(1.0)"><path class="pop" style="--d:0.99s" d="M0 0C3-6 10-7 15-3C10 3 3 4 0 0Z"/></g>
-<g transform="translate(63.4 43.5) rotate(-148) scale(0.95)"><path class="pop" style="--d:1.08s" d="M0 0C3-6 10-7 15-3C10 3 3 4 0 0Z"/></g>
-<g transform="translate(63.4 43.5) rotate(148) scale(0.95)"><path class="pop" style="--d:1.17s" d="M0 0C3-6 10-7 15-3C10 3 3 4 0 0Z"/></g>
-<g transform="translate(48.7 42.9) rotate(-148) scale(0.85)"><path class="pop" style="--d:1.26s" d="M0 0C3-6 10-7 15-3C10 3 3 4 0 0Z"/></g>
-<g transform="translate(48.7 42.9) rotate(148) scale(0.85)"><path class="pop" style="--d:1.35s" d="M0 0C3-6 10-7 15-3C10 3 3 4 0 0Z"/></g>
-<g transform="translate(32.3 39.8) rotate(-148) scale(0.75)"><path class="pop" style="--d:1.44s" d="M0 0C3-6 10-7 15-3C10 3 3 4 0 0Z"/></g>
-<g transform="translate(32.3 39.8) rotate(148) scale(0.75)"><path class="pop" style="--d:1.53s" d="M0 0C3-6 10-7 15-3C10 3 3 4 0 0Z"/></g>
-<circle class="pop" style="--d:2.20s" cx="12.0" cy="30.8" r="2"/>
-<circle class="pop" style="--d:2.25s" cx="15.0" cy="33.0" r="2"/>
-<circle class="pop" style="--d:2.30s" cx="13.9" cy="36.6" r="2"/>
-<circle class="pop" style="--d:2.35s" cx="10.1" cy="36.6" r="2"/>
-<circle class="pop" style="--d:2.40s" cx="9.0" cy="33.0" r="2"/>
-<circle class="pop" style="--d:2.5s" cx="12" cy="34" r=".9"/>
-</g>
-<path class="dr" pathLength="1" style="--d:0s" d="M100 49C86 40 87 25 94.5 24.5C98.5 24.2 100 27.5 100 30C100 27.5 101.5 24.2 105.5 24.5C113 25 114 40 100 49Z"/>
-<g transform="translate(100 36) scale(.58) translate(-100 -36)"><path class="dr" pathLength="1" style="--d:.7s;stroke-width:1.5;opacity:.6" d="M100 49C86 40 87 25 94.5 24.5C98.5 24.2 100 27.5 100 30C100 27.5 101.5 24.2 105.5 24.5C113 25 114 40 100 49Z"/></g>
-<path class="dr" pathLength="1" style="--d:1.9s;stroke-width:.9;opacity:.6" d="M82 58q18 6 36 0"/>
-<path class="pop" style="--d:2.4s" d="M100 8l1.6 3.4 3.4 1.6-3.4 1.6-1.6 3.4-1.6-3.4-3.4-1.6 3.4-1.6z"/>
-<circle class="pop" style="--d:2.6s" cx="88" cy="15" r="1"/>
-<circle class="pop" style="--d:2.7s" cx="112" cy="15" r="1"/>
-</svg>
-
-    </div>
+    <!-- INTRO VIDEO: plays behind the curtain once it opens -->
+    <video
+        id="introVideo"
+        class="hv"
+        src="intro.mp4#t=0.001"
+        muted
+        playsinline
+        webkit-playsinline
+        preload="auto"
+        disablepictureinpicture
+        aria-hidden="true"
+    ></video>
 
 
     <div class="rod"><i></i><i></i></div>
@@ -1759,6 +1718,93 @@ html.fp-on .fpw{display:block}
     <div id="scr" class="cap">
         Scroll
         <b>↓</b>
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     PAGE 2: names + invitation text (was behind the curtain)
+     ========================================================= -->
+
+<section id="hero2">
+
+    <div class="txt">
+
+        <div
+            class="cap"
+            style="position:absolute;top:33%;width:100%;font-size:9px;color:#a98a6c;line-height:1.5"
+        >
+            You are cordially invited to<br>
+            celebrate the engagement of
+        </div>
+
+
+        <div
+            class="sc"
+            style="position:absolute;top:38.5%;width:100%;font-size:52px;line-height:1;color:#5a3a35"
+        >
+            Omar<br>
+            <span style="font-size:22px;display:block;margin:4px 0">&amp;</span>
+            Malak
+        </div>
+
+
+        <p
+            class="cap"
+            style="position:absolute;top:79%;left:28%;width:44%;line-height:1.75;font-size:9px;letter-spacing:.14em"
+        >
+            We would love for you to join us as we celebrate
+            our engagement and the beginning of a beautiful new chapter together.
+        </p>
+
+        <svg class="art heroart" viewBox="0 0 200 66" fill="none" stroke="#a02424" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<g>
+<path class="tint" style="--d:1.2s;--o:.08" fill="#a02424" d="M88 38C70 46 46 46 14 34L26 42C50 51 72 50 88 41Z"/>
+<path class="dr" pathLength="1" style="--d:.3s" d="M88 38C70 46 46 46 14 34"/>
+<path class="dr" pathLength="1" style="--d:.5s;stroke-width:.8;opacity:.55" d="M88 41C72 50 50 51 26 42"/>
+<g transform="translate(76.5 41.8) rotate(-148) scale(1.0)"><path class="pop" style="--d:0.90s" d="M0 0C3-6 10-7 15-3C10 3 3 4 0 0Z"/></g>
+<g transform="translate(76.5 41.8) rotate(148) scale(1.0)"><path class="pop" style="--d:0.99s" d="M0 0C3-6 10-7 15-3C10 3 3 4 0 0Z"/></g>
+<g transform="translate(63.4 43.5) rotate(-148) scale(0.95)"><path class="pop" style="--d:1.08s" d="M0 0C3-6 10-7 15-3C10 3 3 4 0 0Z"/></g>
+<g transform="translate(63.4 43.5) rotate(148) scale(0.95)"><path class="pop" style="--d:1.17s" d="M0 0C3-6 10-7 15-3C10 3 3 4 0 0Z"/></g>
+<g transform="translate(48.7 42.9) rotate(-148) scale(0.85)"><path class="pop" style="--d:1.26s" d="M0 0C3-6 10-7 15-3C10 3 3 4 0 0Z"/></g>
+<g transform="translate(48.7 42.9) rotate(148) scale(0.85)"><path class="pop" style="--d:1.35s" d="M0 0C3-6 10-7 15-3C10 3 3 4 0 0Z"/></g>
+<g transform="translate(32.3 39.8) rotate(-148) scale(0.75)"><path class="pop" style="--d:1.44s" d="M0 0C3-6 10-7 15-3C10 3 3 4 0 0Z"/></g>
+<g transform="translate(32.3 39.8) rotate(148) scale(0.75)"><path class="pop" style="--d:1.53s" d="M0 0C3-6 10-7 15-3C10 3 3 4 0 0Z"/></g>
+<circle class="pop" style="--d:2.20s" cx="12.0" cy="30.8" r="2"/>
+<circle class="pop" style="--d:2.25s" cx="15.0" cy="33.0" r="2"/>
+<circle class="pop" style="--d:2.30s" cx="13.9" cy="36.6" r="2"/>
+<circle class="pop" style="--d:2.35s" cx="10.1" cy="36.6" r="2"/>
+<circle class="pop" style="--d:2.40s" cx="9.0" cy="33.0" r="2"/>
+<circle class="pop" style="--d:2.5s" cx="12" cy="34" r=".9"/>
+</g>
+<g transform="translate(200 0) scale(-1 1)">
+<path class="tint" style="--d:1.2s;--o:.08" fill="#a02424" d="M88 38C70 46 46 46 14 34L26 42C50 51 72 50 88 41Z"/>
+<path class="dr" pathLength="1" style="--d:.3s" d="M88 38C70 46 46 46 14 34"/>
+<path class="dr" pathLength="1" style="--d:.5s;stroke-width:.8;opacity:.55" d="M88 41C72 50 50 51 26 42"/>
+<g transform="translate(76.5 41.8) rotate(-148) scale(1.0)"><path class="pop" style="--d:0.90s" d="M0 0C3-6 10-7 15-3C10 3 3 4 0 0Z"/></g>
+<g transform="translate(76.5 41.8) rotate(148) scale(1.0)"><path class="pop" style="--d:0.99s" d="M0 0C3-6 10-7 15-3C10 3 3 4 0 0Z"/></g>
+<g transform="translate(63.4 43.5) rotate(-148) scale(0.95)"><path class="pop" style="--d:1.08s" d="M0 0C3-6 10-7 15-3C10 3 3 4 0 0Z"/></g>
+<g transform="translate(63.4 43.5) rotate(148) scale(0.95)"><path class="pop" style="--d:1.17s" d="M0 0C3-6 10-7 15-3C10 3 3 4 0 0Z"/></g>
+<g transform="translate(48.7 42.9) rotate(-148) scale(0.85)"><path class="pop" style="--d:1.26s" d="M0 0C3-6 10-7 15-3C10 3 3 4 0 0Z"/></g>
+<g transform="translate(48.7 42.9) rotate(148) scale(0.85)"><path class="pop" style="--d:1.35s" d="M0 0C3-6 10-7 15-3C10 3 3 4 0 0Z"/></g>
+<g transform="translate(32.3 39.8) rotate(-148) scale(0.75)"><path class="pop" style="--d:1.44s" d="M0 0C3-6 10-7 15-3C10 3 3 4 0 0Z"/></g>
+<g transform="translate(32.3 39.8) rotate(148) scale(0.75)"><path class="pop" style="--d:1.53s" d="M0 0C3-6 10-7 15-3C10 3 3 4 0 0Z"/></g>
+<circle class="pop" style="--d:2.20s" cx="12.0" cy="30.8" r="2"/>
+<circle class="pop" style="--d:2.25s" cx="15.0" cy="33.0" r="2"/>
+<circle class="pop" style="--d:2.30s" cx="13.9" cy="36.6" r="2"/>
+<circle class="pop" style="--d:2.35s" cx="10.1" cy="36.6" r="2"/>
+<circle class="pop" style="--d:2.40s" cx="9.0" cy="33.0" r="2"/>
+<circle class="pop" style="--d:2.5s" cx="12" cy="34" r=".9"/>
+</g>
+<path class="dr" pathLength="1" style="--d:0s" d="M100 49C86 40 87 25 94.5 24.5C98.5 24.2 100 27.5 100 30C100 27.5 101.5 24.2 105.5 24.5C113 25 114 40 100 49Z"/>
+<g transform="translate(100 36) scale(.58) translate(-100 -36)"><path class="dr" pathLength="1" style="--d:.7s;stroke-width:1.5;opacity:.6" d="M100 49C86 40 87 25 94.5 24.5C98.5 24.2 100 27.5 100 30C100 27.5 101.5 24.2 105.5 24.5C113 25 114 40 100 49Z"/></g>
+<path class="dr" pathLength="1" style="--d:1.9s;stroke-width:.9;opacity:.6" d="M82 58q18 6 36 0"/>
+<path class="pop" style="--d:2.4s" d="M100 8l1.6 3.4 3.4 1.6-3.4 1.6-1.6 3.4-1.6-3.4-3.4-1.6 3.4-1.6z"/>
+<circle class="pop" style="--d:2.6s" cx="88" cy="15" r="1"/>
+<circle class="pop" style="--d:2.7s" cx="112" cy="15" r="1"/>
+</svg>
+
     </div>
 
 </section>
@@ -3563,6 +3609,113 @@ window.addEventListener('wheel', blockScroll, {passive:false});
 window.addEventListener('keydown', blockScroll, {passive:false});
 
 
+/* =========================================================
+   INTRO VIDEO (page 1)  +  HERO TEXT (page 2)
+   ========================================================= */
+
+const introVideo = $('#introVideo');
+const hero2 = $('#hero2');
+
+
+/* Page 2 writes itself in once it scrolls into view */
+
+function watchHero2(){
+
+    const reveal = () => {
+
+        hero2.classList.add('open');
+
+        /* a few petals start drifting once the page is fully drawn */
+        setTimeout(
+            () => document.documentElement.classList.add('fp-on'),
+            5700
+        );
+
+    };
+
+    if(!('IntersectionObserver' in window)){
+
+        reveal();
+
+        return;
+
+    }
+
+    const watcher = new IntersectionObserver(
+        (es, obs) => {
+
+            if(es.some(e => e.isIntersecting)){
+
+                obs.disconnect();
+
+                reveal();
+
+            }
+
+        },
+        {
+            rootMargin:'0px 0px -45% 0px'
+        }
+    );
+
+    watcher.observe(hero2);
+
+}
+
+
+/* Plays once the curtains are open; auto scroll continues after it ends */
+
+function playIntroVideo(){
+
+    let finished = false;
+
+    const finish = () => {
+
+        if(finished)
+            return;
+
+        finished = true;
+
+        startAutoScroll();
+
+    };
+
+    if(!introVideo){
+
+        finish();
+
+        return;
+
+    }
+
+    introVideo.muted = true;
+
+    introVideo.addEventListener(
+        'ended',
+        () => setTimeout(finish, 600),
+        {once:true}
+    );
+
+    introVideo.addEventListener('error', finish, {once:true});
+
+    const started = introVideo.play();
+
+    if(started && typeof started.catch === 'function'){
+
+        started.catch(finish);
+
+    }
+
+    /* safety net: never leave the visitor stuck on page 1 */
+
+    setTimeout(
+        finish,
+        ((introVideo.duration || 6) + 3) * 1000
+    );
+
+}
+
+
 function openInvitationNow(){
 
     if(invitationOpened)
@@ -3600,8 +3753,8 @@ function openInvitationNow(){
 
     $('#hero').classList.add('open');
 
-    /* a few petals start drifting once the hero is fully drawn */
-    setTimeout(() => document.documentElement.classList.add('fp-on'), 5700);
+    /* page 2 (names) writes itself in when it scrolls into view */
+    watchHero2();
 
 
     /*
@@ -3630,6 +3783,11 @@ function openInvitationNow(){
                     animateCurtain
                 );
 
+            }else{
+
+                /* curtains are open: play the intro video */
+                playIntroVideo();
+
             }
 
         }
@@ -3637,19 +3795,9 @@ function openInvitationNow(){
 
 
     /*
-     * Start auto scroll after
-     * the curtain animation AND the
-     * hero flourish drawing finish.
+     * Auto scroll now starts when the intro video
+     * ends (see playIntroVideo).
      */
-
-    setTimeout(
-        () => {
-
-            startAutoScroll();
-
-        },
-        5700
-    );
 
 }
 
