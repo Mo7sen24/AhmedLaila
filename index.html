@@ -3508,7 +3508,7 @@ function playIntroVideo(){
 
     introVideo.muted = true;
 
-    /* the video keeps looping; auto scroll starts when the first play ends */
+    /* the video keeps looping; auto scroll starts when the first forward pass ends */
 
     introVideo.loop = true;
 
@@ -3518,7 +3518,12 @@ function playIntroVideo(){
         'timeupdate',
         () => {
 
-            if(introVideo.currentTime < lastTime - 0.5)
+            /* the video plays forward then in reverse (ping-pong):
+               the first forward pass ends at half of its length */
+            if(
+                (introVideo.duration && introVideo.currentTime >= introVideo.duration / 2) ||
+                introVideo.currentTime < lastTime - 0.5
+            )
                 finish();
 
             lastTime = introVideo.currentTime;
