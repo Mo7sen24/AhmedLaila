@@ -2231,20 +2231,6 @@ html.fp-on .fpw{display:block}
         >
 
 
-        <label for="rsvpEmail">
-            EMAIL (OPTIONAL)
-        </label>
-
-
-        <input
-            id="rsvpEmail"
-            name="email"
-            type="email"
-            placeholder="your@email.com"
-            autocomplete="email"
-        >
-
-
         <label>
             WILL YOU ATTEND? *
         </label>
@@ -2404,7 +2390,6 @@ const RSVP_URL =
 
 const rsvpForm = $('#rsvpForm');
 const rsvpName = $('#rsvpName');
-const rsvpEmail = $('#rsvpEmail');
 const rsvpMessage = $('#rsvpMessage');
 const attendance = $('#attendance');
 
@@ -2543,7 +2528,6 @@ rsvpFrame.addEventListener('load', function(){
 
 
         rsvpName.value = '';
-        rsvpEmail.value = '';
         rsvpMessage.value = '';
         attendance.value = '';
 
